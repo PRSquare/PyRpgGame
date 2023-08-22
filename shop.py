@@ -1,19 +1,20 @@
 import random
+import globaldata
+import builder
 
 class Shop():
 	def __init__(self):
 		self.items = []
 		self.available_items = []
+		self.items_amount = 10
+	def gen_items(self):
+		for i in range(0, self.items_amount):
+			itemB = builder.get_random_element(self.available_items)
+			items.append(itemB.build())
 
-	def gen_items(self, amount = 10):
-		for i in range(0, amount):
-			j = random.randrange(0, len(self.available_items))
-			items.append(self._available_damage_types[j])
+	def buy_at(self, it_id):
+		return items.pop(it_id)
 
-	def buy_at(self, id):
-		item = None
-		try:
-			item = self.items[id]
-		except Exception:
-			raise
-		return item
+	def sell(self, item):
+		self.items.append(item)
+		return item.price
