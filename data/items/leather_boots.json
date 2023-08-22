@@ -1,0 +1,19 @@
+{
+	"name" : "leather boots",
+	"description" : "Boots frrom dark leather. Very warm.",
+	"slot" : "legs",
+	"isUsable" : false,
+	"isProtected" : false,
+	"rarity" : 1,
+	"price" : 40,
+	"effects" : [ [
+		{
+			"type" : "resist",
+			"name" : "resist",
+			"options" :{
+						"type" : "physical",
+						"value" : [7, 15]
+					}
+		}
+	] ]
+}

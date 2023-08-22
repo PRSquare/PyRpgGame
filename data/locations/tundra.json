@@ -1,0 +1,32 @@
+{
+	"name" : "tundra",
+	"size" : 10,
+	"monsters" : [
+		[
+			{"name" : "goblin", "amount" : [2, 5]},
+		],
+		[
+			{"name" : "orc", "amount" : [1, 2]},
+		]
+		[
+			{"name" : "kobalt", "amount" : [2, 5]},
+			{"name" : "goblin", "amount" : [1, 2]}
+		],
+		[
+			{"name" : "kobalt", "amount" : [3, 4]}
+		],
+		[
+			{"name" : "hob_goblin", "amount" : [2, 3]}
+		]
+		[
+			{"name" : "goblin", "amount" : [2, 3]},
+			{"name" : "hob_goblin", "amount" : 1}
+		]
+		[
+			{"name" : "skeleton", "amount" : [4, 8]} 
+		]
+	],
+	"boss" : [
+		{"name" : "ogr", "amount" : 1}
+	],
+}

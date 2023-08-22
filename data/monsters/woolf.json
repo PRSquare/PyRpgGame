@@ -1,0 +1,21 @@
+{
+	"name" : "wolf",
+	"health" : [80, 80],
+	"drop" : [
+		[{"coins" : [2, 10]}, {"leather boots" : [1, 1]}],
+		[{"coins" : [10, 10]}]
+	],
+	"damage" : [
+		{
+			"n" : [2, 2],
+			"d" : [4, 4],
+			"add" : [0, 0]
+		}
+	],
+	"resistance" : [
+		{
+			"type" : "physical",
+			"value" : [20, 20]
+		},
+	]
+}

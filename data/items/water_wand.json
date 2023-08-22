@@ -1,0 +1,23 @@
+{
+	"name" : "water wand",
+	"description" : "A stick, that somehow creates a chunks of water. Magic!",
+	"slot" : "hand",
+	"isUsable" : false,
+	"isProtected" : false,
+	"rarity" : 3,
+	"price" : 300,
+	"effects" : [
+		[
+			{
+				"type" : "add_damage",
+				"name" : "add_damage",
+				"type" : "water",
+				"options" : {
+								"n" : [1, 1],
+								"d" : [15, 30],
+								"add" : [0, 0]
+							}
+			}
+		]
+	]
+}

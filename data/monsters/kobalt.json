@@ -1,0 +1,23 @@
+{
+	"name" : "kobalt",
+	"health" : [50, 50],
+	"slots" : [
+		"hand", "hand", "legs", "torso", "head", "finger", "finger", "finger", "finger"
+	],
+	"drop" : [
+		[{"poison" : [0, 1], "heal potion" : [0, 1], "coins" : [5, 10]}]
+	],
+	"damage" : [
+		{
+			"n" : [1, 1],
+			"d" : [4, 4],
+			"add" : [1, 7]
+		}
+	],
+	"resistance" : [
+		{
+			"type" : "water",
+			"value" : [50, 50]
+		}
+	]
+}

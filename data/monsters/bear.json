@@ -1,0 +1,25 @@
+{
+	"name" : "bear",
+	"health" : [100, 100],
+	"drop" : [
+		[{"coins" : [2, 10]}, {"leather boots" : [1, 1]}],
+		[{"coins" : [10, 10]}]
+	],
+	"damage" : [
+		{
+			"n" : [1, 1],
+			"d" : [8, 8],
+			"add" : [5, 5]
+		}
+	],
+	"resistance" : [
+		{
+			"type" : "physical",
+			"value" : [20, 20]
+		},
+		{
+			"type" : "fire",
+			"value" : [15, 20]
+		}
+	]
+}

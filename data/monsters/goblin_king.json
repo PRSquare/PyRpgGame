@@ -1,0 +1,24 @@
+{
+	"name" : "goblin king",
+	"health" : [200, 200],
+	"slots" : [
+		"hand", "hand", "legs", "torso", "head", "finger", "finger", "finger", "finger"
+	],
+	"drop" : [
+		[{"magic_ring" : [1, 1]}, {"coins" : [100, 150]}],
+		[{"coins" : [150, 300]}]
+	],
+	"damage" : [
+		{
+			"n" : [3, 3],
+			"d" : [6, 6],
+			"add" : [5, 5]
+		}
+	],
+	"equipement" : [
+		[
+			{"name" : "axe"},
+			{"name" : "armor plate"}
+		]
+	]
+}

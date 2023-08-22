@@ -1,0 +1,44 @@
+{
+	"name" : "ogr",
+	"health" : [250, 250],
+	"slots" : [
+		"hand", "hand", "legs", "torso", "head", "finger", "finger", "finger", "finger"
+	],
+	"drop" : [
+		[{"magic_crown" : [0, 1]}, {"coins" : [200, 350]}],
+	],
+	"damage" : [
+		{
+			"type" : "physical",
+			"n" : [3, 3],
+			"d" : [6, 6],
+			"add" : [5, 5]
+		},
+		{
+			"type" : "fire",
+			"n" : [1, 1],
+			"d" : [6, 6],
+			"add" : [0, 0]
+		}
+	],
+	"resistance" : [
+		{
+			"type" : "earth",
+			"value" : [15, 20]
+		}
+	],
+	"equipement" : [
+		[
+			{"name" : "axe"},
+			{"name" : "magic ring"}
+			{"name" : "armor plate"}
+		],
+		[
+			{"name" : "axe"},
+			{"name" : "magic ring"}
+			{"name" : "magic ring"}
+			{"name" : "magic crown"}
+			{"name" : "magic crown"}
+		],
+	]
+}

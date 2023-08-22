@@ -1,0 +1,13 @@
+{
+	"to_load" : [
+		"armor_plate",
+		"axe",
+		"heal_potion",
+		"leather_boots",
+		"magic_crown",
+		"magic_ring",
+		"poison",
+		"sword",
+		"water_wand"
+	]
+}

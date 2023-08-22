@@ -1,0 +1,14 @@
+{
+	"to_load" : [
+		"bear",
+		"goblin",
+		"goblin_king",
+		"hob_goblin",
+		"kobalt",
+		"ogr",
+		"orc",
+		"polar_bear",
+		"skeleton",
+		"wolf"
+	]
+}

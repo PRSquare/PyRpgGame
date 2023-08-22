@@ -1,0 +1,7 @@
+{
+	"to_load" : [
+		"dungeon",
+		"forest",
+		"tundra"
+	]
+}

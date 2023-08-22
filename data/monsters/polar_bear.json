@@ -1,0 +1,24 @@
+{
+	"name" : "polar bear",
+	"health" : [250, 250],
+	"drop" : [
+		[{"coins" : [100, 150]}, {"magic wand" : [1, 1]}]
+	],
+	"damage" : [
+		{
+			"n" : [3, 3],
+			"d" : [12, 12],
+			"add" : [7, 7]
+		}
+	],
+	"resistance" : [
+		{
+			"type" : "physical",
+			"value" : [50, 60]
+		},
+		{
+			"type" : "fire",
+			"value" : [50, 70]
+		}
+	]
+}

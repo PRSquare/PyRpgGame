@@ -1,0 +1,46 @@
+{
+	"name" : "skeleton",
+	"health" : [80, 80],
+	"slots" : [
+		"hand", "hand", "legs", "torso", "head", "finger", "finger", "finger", "finger"
+	],
+	"drop" : [
+		[{"axe" : [0, 1], "magic ring" : [0, 1]}],
+		[{"coins" : [5, 10]}]
+	],
+	"damage" : [
+		{
+			"n" : [1, 1],
+			"d" : [4, 4],
+			"add" : [0, 0]
+		}
+	],
+	"equipement" : [
+		[],
+		[{
+			"name" : "axe"
+		}],
+		[
+			{"name" : "axe"},
+			{"name" : "leather boots"}
+		]
+	],
+	"resistance" : [
+		{
+			"type" : "air",
+			"value" : [90, 90]
+		},
+		{
+			"type" : "fire",
+			"value" : [90, 90]
+		},
+		{
+			"type" : "earth",
+			"value" : [90, 90]
+		}
+		{
+			"type" : "water",
+			"value" : [90, 90]
+		}
+	]
+}

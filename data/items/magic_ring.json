@@ -1,0 +1,47 @@
+{
+	"name" : "magin ring",
+	"description" : "Ring that protecs you from enviromental powers... Probably.",
+	"slot" : "finger",
+	"isUsable" : false,
+	"isProtected" : false,
+	"rarity" : 3,
+	"price" : 250,
+	"effects" : [ [
+		{
+			"type" : "resist",
+			"name" : "resist",
+			"options" :{
+						"type" : "fire",
+						"value" : [7, 15]
+					}
+		}
+	], [
+		{
+			"type" : "resist",
+			"name" : "resist",
+			"options" :{
+						"type" : "water",
+						"value" : [7, 15]
+					}
+		}
+	], [
+		{
+			"type" : "resist",
+			"name" : "resist",
+			"options" :{
+						"type" : "earth",
+						"value" : [7, 15]
+					}
+		}
+	], [
+		{
+			"type" : "resist",
+			"name" : "resist",
+			"options" :{
+						"type" : "air",
+						"value" : [7, 15]
+					}
+		}
+	]
+	 ]
+}

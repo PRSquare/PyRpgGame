@@ -1,0 +1,21 @@
+{
+	"name" : "poison",
+	"description" : "green substance. Usualy used for killing mouces and incects. But you never know, maybe it is tasty?",
+	"isUsable" : true,
+	"isProtected" : false,
+	"rarity" : 2,
+	"price" : 20,
+	"effects" : [
+		[
+			{
+				"type" : "dec_health",
+				"name" : "poison",
+				"description" : "You are poisoned!",
+				"options" : {
+								"duration" : [5, 10],
+								"strength" : [2, 5]
+							}
+			}
+		]
+	]
+}

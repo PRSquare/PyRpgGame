@@ -1,0 +1,30 @@
+{
+	"name" : "hob goblin",
+	"health" : [150, 150],
+	"slots" : [
+		"hand", "hand", "legs", "torso", "head", "finger", "finger", "finger", "finger"
+	],
+	"drop" : [
+		[{"sword" : [0, 1], "coins" : [5, 10]}],
+		[{"coins" : [20, 25]}]
+	],
+	"damage" : [
+		{
+			"n" : [1, 1],
+			"d" : [4, 4],
+			"add" : [0, 0]
+		}
+	],
+	"resistance" : [
+		{
+			"type" : "fire",
+			"value" : [15, 20]
+		}
+	],
+	"equipement" : [
+		[
+			{"name" : "sword"},
+			{"name" : "leather_boots"}
+		]
+	]
+}

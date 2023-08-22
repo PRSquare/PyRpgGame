@@ -1,0 +1,28 @@
+{
+	"name" : "goblin",
+	"health" : [80, 80],
+	"slots" : [
+		"hand", "hand", "legs", "torso", "head", "finger", "finger", "finger", "finger"
+	],
+	"drop" : [
+		[{"axe" : [1, 1]}],
+		[{"coins" : [5, 10]}]
+	],
+	"damage" : [
+		{
+			"n" : [1, 1],
+			"d" : [4, 4],
+			"add" : [0, 0]
+		}
+	],
+	"equipement" : [
+		[],
+		[{
+			"name" : "axe"
+		}],
+		[
+			{"name" : "axe"},
+			{"name" : "leather boots"}
+		]
+	]
+}

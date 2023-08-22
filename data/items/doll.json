@@ -1,0 +1,8 @@
+{
+	"name" : "doll",
+	"description" : "just a doll",
+	"isUsable" : false,
+	"isProtected" : false,
+	"rarity" : 1,
+	"price" : 10
+}

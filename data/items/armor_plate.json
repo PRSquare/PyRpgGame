@@ -1,0 +1,19 @@
+{
+	"name" : "armor plate",
+	"description" : "Thick piece of shiny metal covering your chest.",
+	"slot" : "chest",
+	"isUsable" : false,
+	"isProtected" : false,
+	"rarity" : 2,
+	"price" : 100,
+	"effects" : [ [
+		{
+			"type" : "resist",
+			"name" : "physical damage resistance",
+			"options" : {
+				"type" : "physical",
+				"value" : [10, 50]
+			}
+		}
+	] ]
+}
