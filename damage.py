@@ -1,14 +1,6 @@
 import effect
 import random
 
-_available_damage_types = { # Inic via ini file later
-	"physiscal": 0,
-	"fire": 1,
-	"water": 2,
-	"air": 3,
-	"earth": 4
-}
-
 MAXIMUM_RESISTANCE = 0.9
 MAXIMUM_DAMAGE_MOODIFICATOR = 5
 # MAXIMUM_DAMAGE = 10000000
@@ -31,15 +23,15 @@ class DamageCalculator():
 			m = 1
 			r = 0
 			for dmel in dmgl: # calculate all damage of a type
-				if dmel.damage_type.equals(dmgtype):
+				if dmel.damage_type == dmgtype:
 					d += dmel.get_damage()
 
 			for mdel in modl: #  calculate damage modificators of a type
-				if mdel.damage_type.equals(dmgtype):
+				if mdel.damage_type == dmgtype:
 					m += mdel.getInFloat()
 
 			for rsel in resl: # calculate all resistance og a type
-				if rsel.damage_type.equals(dmgtype):
+				if rsel.damage_type == dmgtype:
 					r += rsel.getInFloat()
 			
 			self.finaldamage += d * min(m, MAXIMUM_DAMAGE_MOODIFICATOR) * (1-min(MAXIMUM_RESISTANCE, r))
@@ -47,10 +39,11 @@ class DamageCalculator():
 			# geting next damage type
 			j = i+1
 			for i in range(j, len(dmgl)):
-				if not dmgl[i].damage_type.type in [o.type for o in useddmgtypes]:
+				if not dmgl[i].damage_type in useddmgtypes:
 					dmgtype = dmgl[i].damage_type
 					useddmgtypes.append(dmgtype)
-					continue
+					break
+			
 			i += 1
 
 
@@ -58,14 +51,8 @@ class DamageCalculator():
 	# def deal_damage(self):
 	# 	pass
 
-class DamageType():
- 	def __init__(self, dmgType):
- 		self.type = dmgType
- 	def equals(self, dmgtp):
- 		return self.type == dmgtp.type
-
 class DamageModificator(): # DamageModificator / Resistance
-	def __init__(self, percent = 0, damage_type = DamageType(0)):
+	def __init__(self, percent = 0, damage_type = ""):
 		self.damage_type = damage_type
 		self.percent = percent
 
@@ -73,7 +60,7 @@ class DamageModificator(): # DamageModificator / Resistance
 		return self.percent/100.0
 
 class Damage():
-	def __init__(self, n = 1, d = 1, add = 0, damage_type = DamageType(0)):
+	def __init__(self, n = 1, d = 1, add = 0, damage_type = ""):
 		self.damage_type = damage_type
 		self.n = n
 		self.d = d
