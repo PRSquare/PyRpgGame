@@ -1,7 +1,13 @@
 class DataHolder():
+	
 	def __init__(self):
 		self._data = dict()
+		self.test = "test"
 
+	@property
+	def data(self):
+		return self._data
+	
 	def add(self, name, value):
 		if name in self._data.keys():
 			return False
