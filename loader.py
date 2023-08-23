@@ -64,16 +64,12 @@ def effect_inic_general_fields(ef, data):
 	ef.description = data.get("description")
 	
 	dl = data.get("delay")
-	if isinstance(dl, int) or not dl:
-		ef.delay = dl
-	else:
-		ef.delay = random.randrange(dl[0], dl[1])
+	
+	ef.delay = dl if isinstance(dl, int) or not dl else random.randrange(dl[0], dl[1])
 	
 	dur = data.get("duration")	
-	if isinstance(dur, int) or not dur:
-		ef.duration = dur
-	else:
-		ef.duration = random.randrange(dur[0], dur[1])
+	
+	ef.duration = dur if isinstance(dur, int) or not dur else random.randrange(dur[0], dur[1])
 
 	ef.isResetable = data.get("isResetable")
 
@@ -140,11 +136,13 @@ def create_effect(data):
 		return create_temp_heal_ef(data)
 
 
+import alive # slot
+
 def create_item_builder(data):
 	ib = itembuilder.ItemBuilder()
 	ib.name = data.get("name")
 	ib.description = data.get("description")
-	ib.slot = data.get("slot")
+	ib.slot = alive.EquipementSlot(data.get("slot"))
 	ib.isUsable = data.get("isUsable")
 	ib.isProtected = data.get("isProtected")
 	ib.rarity = data.get("rarity")
@@ -251,3 +249,17 @@ def create_location(data):
 			spawn_var.append(ms)
 		spawn_vars.append(spawn_var)
 	# loc.spawn_vars = 
+
+def load_all_items(data):
+	for i in data.get("to_load"):
+		filename = i
+		d = get_data(f"data/items/{filename}.json")
+		ib = create_item_builder(d)
+		globaldata.ITEMS.add(filename, ib)
+
+def load_all_monsters(data):
+	for i in data.get("to_load"):
+		filename = i
+		d = get_data(f"data/monsters/{filename}.json")
+		ib = create_monster_builder(d)
+		globaldata.MONSTERS.add(filename, ib)

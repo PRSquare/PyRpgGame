@@ -81,7 +81,7 @@ class EAddDamageModificator(effect.Effect):
 		pass
 
 	def on_end(self):
-		self.target.damageModificators.remove_damage_modif(self._dm)
+		self.target.remove_damage_modif(self._dm)
 
 class EAddResistance(effect.Effect):
 	def __init__(self, target = None):

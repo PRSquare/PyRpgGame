@@ -10,6 +10,7 @@
 		{
 			"type" : "resist",
 			"name" : "physical damage resistance",
+			"duration" : -1,
 			"options" : {
 				"type" : "physical",
 				"value" : [10, 50]

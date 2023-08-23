@@ -10,6 +10,7 @@
 		{
 			"type" : "resist",
 			"name" : "resist",
+			"duration" : -1,
 			"options" :{
 						"type" : "physical",
 						"value" : [7, 15]

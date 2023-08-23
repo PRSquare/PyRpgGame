@@ -1,4 +1,6 @@
 class Showable():
+	def __init__(self):
+		pass
 	def show(self):
 		pass
 
@@ -46,6 +48,17 @@ class Interface(Showable):
 	def process_commands(self):
 		pass
 
+	def get_input(self):
+		c = input()
+		inputed = None
+		for iv in self.inputVars.values():
+			if iv.command == c:
+				inputed = iv
+		# if inputed == None:				
+		# 	self.on_wrong_input()
+		# 	return None
+		return inputed 
+
 	def show_input_vars(self):
 		for iv in self.inputVars.values():
 			iv.show()
@@ -71,27 +84,27 @@ def yes_command_builder():
 def no_command_builder():
 	return InputVariant('n', "No")
 
-_available_damage_types = { # TEMP TEMP TEMP!!!!!!!!
-	0: "physiscal",
-	1: "fire",
-	2: "water",
-	3: "air",
-	4: "earth"
-} 
-def damage_type_to_string(dt):
-	return _available_damage_types[dt]
+# _available_damage_types = { # TEMP TEMP TEMP!!!!!!!!
+# 	0: "physiscal",
+# 	1: "fire",
+# 	2: "water",
+# 	3: "air",
+# 	4: "earth"
+# } 
+def damage_type_to_string(dt): # temp
+	return dt
 
 def damage_to_string(damage):
 	n = damage.n
 	d = damage.d
 	add = damage.add
-	dt = damage_type_to_string(damage.damage_type.type)
+	dt = damage_type_to_string(damage.damage_type)
 	return f"{n}d{d}+{add} ({dt})"
 	
 
 def damage_modificator_to_string(damageMod):
 	p = damageMod.percent
-	dt = damage_type_to_string(damageMod.damage_type.type)
+	dt = damage_type_to_string(damageMod.damage_type)
 	return f"{p}% ({dt})"
 
 def effect_to_string(effect):

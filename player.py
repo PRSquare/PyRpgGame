@@ -12,7 +12,7 @@ class Quest():
 		self.reward = builder.get_random_element(globaldata.ITEMS.data) 
 
 class Journal():
-	def __init__():
+	def __init__(self):
 		self.questlist = []
 		self._questLimit = 3
 
@@ -36,5 +36,22 @@ class Journal():
 class Player(alive.Alive):
 	def __init__(self, name = "Player"):
 		super().__init__()
+
+		self.name = "Player"
+		self.health = 100
+		self.experience = 100
+
+		self.eqSlots.append(alive.EquipementSlot("hand"))
+		self.eqSlots.append(alive.EquipementSlot("hand"))
+
+		self.eqSlots.append(alive.EquipementSlot("finger"))
+		self.eqSlots.append(alive.EquipementSlot("finger"))
+		self.eqSlots.append(alive.EquipementSlot("finger"))
+		self.eqSlots.append(alive.EquipementSlot("finger"))
+
+		self.eqSlots.append(alive.EquipementSlot("head"))
+		self.eqSlots.append(alive.EquipementSlot("torso"))
+		self.eqSlots.append(alive.EquipementSlot("legs"))
+
 		self.journal = Journal()
 	

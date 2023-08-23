@@ -5,7 +5,7 @@
 		"hand", "hand", "legs", "torso", "head", "finger", "finger", "finger", "finger"
 	],
 	"drop" : [
-		[{"magic_crown" : [0, 1]}, {"coins" : [200, 350]}],
+		[{"magic_crown" : [0, 1]}, {"coins" : [200, 350]}]
 	],
 	"damage" : [
 		{
@@ -30,15 +30,15 @@
 	"equipement" : [
 		[
 			{"name" : "axe"},
-			{"name" : "magic ring"}
+			{"name" : "magic ring"},
 			{"name" : "armor plate"}
 		],
 		[
 			{"name" : "axe"},
-			{"name" : "magic ring"}
-			{"name" : "magic ring"}
+			{"name" : "magic ring"},
+			{"name" : "magic ring"},
+			{"name" : "magic crown"},
 			{"name" : "magic crown"}
-			{"name" : "magic crown"}
-		],
+		]
 	]
 }
