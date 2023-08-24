@@ -3,7 +3,7 @@ import builder
 
 class MonsterSpawn(builder.Builder):
 
-	def __init__():
+	def __init__(self):
 		self._amont = []
 		self._monsterB = None
 

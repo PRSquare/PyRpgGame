@@ -3,11 +3,11 @@
 	"size" : 10,
 	"monsters" : [
 		[
-			{"name" : "goblin", "amount" : [2, 5]},
+			{"name" : "goblin", "amount" : [2, 5]}
 		],
 		[
-			{"name" : "orc", "amount" : [1, 2]},
-		]
+			{"name" : "orc", "amount" : [1, 2]}
+		],
 		[
 			{"name" : "kobalt", "amount" : [2, 5]},
 			{"name" : "goblin", "amount" : [1, 2]}
@@ -18,5 +18,5 @@
 	],
 	"boss" : [
 		{"name" : "goblin_king", "amount" : 1}
-	],
+	]
 }

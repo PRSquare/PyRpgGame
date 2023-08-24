@@ -101,7 +101,7 @@ class fake_game():
 
 		loader.load_all_items(loader.get_data("data/tecnical/items.json"))
 		loader.load_all_monsters(loader.get_data("data/tecnical/monsters.json"))
-
+		loader.load_all_locations(loader.get_data("data/tecnical/locations.json"))
 		self.player = None
 		create_char = CharacterCreationInterface(self)
 		create_char.show()
@@ -109,6 +109,8 @@ class fake_game():
 			create_char.process_commands()
 
 		self.interface = interface.StatusInterface(self, self.player)
+
+		self.currentLocation = globaldata.LOCATIONS.get("forest")
 
 		# sword_for_player = t.create_sword()
 		# self.player.inventory.add_item(sword_for_player)

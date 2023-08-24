@@ -3,11 +3,11 @@
 	"size" : 5,
 	"monsters" : [
 		[
-			{"name" : "bear", "amount" : 2},
+			{"name" : "bear", "amount" : 2}
 		],
 		[
-			{"name" : "wolf", "amount" : [3, 5]},
-		]
+			{"name" : "wolf", "amount" : [3, 5]}
+		],
 		[
 			{"name" : "bear", "amount" : 1},
 			{"name" : "wolf", "amount" : [1, 2]}
@@ -15,5 +15,5 @@
 	],
 	"boss" : [
 		{"name" : "polar_bear", "amount" : 1}
-	],
+	]
 }

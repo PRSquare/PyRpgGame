@@ -10,7 +10,7 @@ class ItemBuilder(builder.Builder):
 		self._effectsVariants = []
 		self._isUsable = False
 		self._isProtected = False
-		self._usagesNumber = []
+		self._usagesNumber = [1, 1]
 		self._rarity = 1
 		self._price = 10
 
@@ -21,7 +21,10 @@ class ItemBuilder(builder.Builder):
 	@usagesNumber.setter
 	def usagesNumber(self, val):
 		if val != None:
-			self._usagesNumber = val
+			if isinstance(val, list):
+				self._usagesNumber = val
+			else:
+				self._usagesNumber = [val, val]
 
 	@property
 	def rarity(self):

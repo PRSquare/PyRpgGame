@@ -84,13 +84,15 @@ def create_add_dmg_eff(data):
 def create_decreace_health_ef(data):
 	ef = effectsubclasses.EDecreaceHealth()
 	effect_inic_general_fields(ef, data)
-	ef.strength = data.get("options").get("strength")
+	strength = data.get("options").get("strength")
+	ef.strength = strength if isinstance(strength, int) else random.randrange(strength[0], strength[1])
 	return ef
 
 def create_restore_helth_effect(data):
 	ef = effectsubclasses.ERestoreHealth()
 	effect_inic_general_fields(ef, data)
-	ef.strength = data.get("options").get("strength")
+	strength = data.get("options").get("strength")
+	ef.strength = strength if isinstance(strength, int) else random.randrange(strength[0], strength[1])
 	return ef
 
 def create_add_dmg_mod_eff(data):
@@ -108,13 +110,15 @@ def create_add_res_eff(data):
 def create_vampirism_ef(data):
 	ef = effectsubclasses.EVampirism()
 	effect_inic_general_fields(ef, data)
-	ef.strength = data.get("options").get("strength")
+	strength = data.get("options").get("strength")
+	ef.strength = strength if isinstance(strength, int) else random.randrange(strength[0], strength[1])
 	return ef
 
 def create_temp_heal_ef(data):
 	ef = effectsubclasses.ETemporaryHeal()
 	effect_inic_general_fields(ef, data)
-	ef.strength = data.get("options").get("strength")
+	strength = data.get("options").get("strength")
+	ef.strength = strength if isinstance(strength, int) else random.randrange(strength[0], strength[1])
 	return ef
 	
 
@@ -147,7 +151,9 @@ def create_item_builder(data):
 	ib.isProtected = data.get("isProtected")
 	ib.rarity = data.get("rarity")
 	ib.price = data.get("price")
-	
+	ib.usagesNumber = data.get("usages_number")
+
+
 	efsData = data.get("effects")
 	if efsData:
 		for e in efsData:
@@ -243,9 +249,9 @@ def create_location(data):
 	for sv in sv_list:
 		spawn_var = []
 		for MSParams in sv:
-			ms = MonsterSpawn()
-			ms.amont = MSPparams["amount"]
-			ms.monsterB = globaldata.MONSTERS.get(MSPparams["name"])
+			ms = location.MonsterSpawn()
+			ms.amont = MSParams["amount"]
+			ms.monsterB = globaldata.MONSTERS.get(MSParams["name"])
 			spawn_var.append(ms)
 		spawn_vars.append(spawn_var)
 	# loc.spawn_vars = 
@@ -263,3 +269,10 @@ def load_all_monsters(data):
 		d = get_data(f"data/monsters/{filename}.json")
 		ib = create_monster_builder(d)
 		globaldata.MONSTERS.add(filename, ib)
+
+def load_all_locations(data):
+	for i in data.get("to_load"):
+		filename = i
+		d = get_data(f"data/locations/{filename}.json")
+		l = create_location(d)
+		globaldata.LOCATIONS.add(filename, l)
