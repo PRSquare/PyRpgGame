@@ -30,16 +30,9 @@ class ItemDetailsInterface(interface.Interface):
 
 	def update(self):
 		pass
+
 	def process_commands(self):
-		print("> ", end="")
-		c = input()
-		inputed = None
-		for iv in self.inputVars.values():
-			if iv.command == c:
-				inputed = iv
-		if inputed == None:				
-			self.on_wrong_input()
-			return
+		inputed = self.input_command()
 
 		if inputed.equals(self.inputVars["quit"]):
 			return
@@ -108,33 +101,16 @@ class ContainerInterface(interface.Interface):
 		pass
 
 	def process_commands(self):
-		print("> ", end="")
-		c = input()
-		inputed = None
-		for iv in self.inputVars.values():
-			if iv.command == c:
-				inputed = iv
-		if inputed == None:				
-			self.on_wrong_input()
-			return
+		inputed = self.input_command()
 
 		if inputed.equals(self.inputVars["quit"]):
 			self.gameClassHandler.exit()
 			return
 		if inputed.equals(self.inputVars["look"]):
-			print("Wich item you want to look at (print a number or 'c' to cancel)")
-			print("> ", end="")
-			c = input()
-			while(c != 'c'):
-				if int(c) not in range(0, ITEMS_PER_PAGE):
-					print(f"{int(c)} Incorrect input. Please try again")
-				else:
-					itInterface = ItemDetailsInterface(self.gameClassHandler, self._container.itemsList[int(c)+self._currentPage*ITEMS_PER_PAGE])
-					itInterface.show()
-					itInterface.process_commands()
-					return
-				print("> ")
-				c = input()
+			i = self.input_number(0, ITEMS_PER_PAGE)
+			itInterface = ItemDetailsInterface(self.gameClassHandler, self._container.itemsList[i+self._currentPage*ITEMS_PER_PAGE])
+			itInterface.show()
+			itInterface.process_commands()
 			return
 		if "prev_page" in self.inputVars.keys():
 			if inputed.equals(self.inputVars["prev_page"]):
@@ -170,19 +146,11 @@ class PlayerInventoryInterface(ContainerInterface):
 			self.gameClassHandler.exit()
 			return
 		if inputed.equals(self.inputVars["look"]):
-			print("Wich item you want to look at (print a number or 'c' to cancel)")
-			print("> ", end="")
-			c = input()
-			while(c != 'c'):
-				if int(c) not in range(0, ITEMS_PER_PAGE):
-					print(f"{int(c)} Incorrect input. Please try again")
-				else:
-					itInterface = ItemDetailsInterface(self.gameClassHandler, self._container.itemsList[int(c)+self._currentPage*ITEMS_PER_PAGE])
-					itInterface.show()
-					itInterface.process_commands()
-					return
-				print("> ")
-				c = input()
+			print("Wich item you want to look at?")
+			i = self.input_number(0, ITEMS_PER_PAGE)
+			itInterface = ItemDetailsInterface(self.gameClassHandler, self._container.itemsList[i+self._currentPage*ITEMS_PER_PAGE])
+			itInterface.show()
+			itInterface.process_commands()
 			return
 
 		if "prev_page" in self.inputVars.keys():
@@ -195,79 +163,33 @@ class PlayerInventoryInterface(ContainerInterface):
 				return
 
 		if inputed.equals(self.inputVars["equip"]):
-			print("Wich item you want to equip (print a number or 'c' to cancel)")
-			print("> ", end="")
-			c = input()
-			while(c != 'c'):
-				if int(c) not in range(0, ITEMS_PER_PAGE):
-					print(f"{int(c)} Incorrect input. Please try again")
-					print("> ")
-					c = input()
+			print("Wich item you want to equip?")
+			i = self.input_number(0, ITEMS_PER_PAGE)
+			if i != None:
+				item = self._container.itemsList[i+self._currentPage*ITEMS_PER_PAGE]
+				if not item.isEquiped:
+					self.gameClassHandler.player.equip(item)
 				else:
-					item = self._container.itemsList[int(c)+self._currentPage*ITEMS_PER_PAGE]
-					if not item.isEquiped:
-						self.gameClassHandler.player.equip(item)
-					else:
-						self.gameClassHandler.player.unequip(item)
-					break
+					self.gameClassHandler.player.unequip(item)
 			return
 
 		if inputed.equals(self.inputVars["use"]):
-			print("Wich item you want to use (print a number or 'c' to cancel)")
-			print("> ", end="")
-			c = input()
-			while(c != 'c'):
-				try:
-					int(c)
-				except Exception:
-					print("Please print a number!")
-					print("> ")
-					c = input
-					continue
-				if int(c) not in range(0, ITEMS_PER_PAGE):
-					print(f"{int(c)} Incorrect input. Please try again")
-					print("> ")
-					c = input()
-				else:
-					print(int(c)+self._currentPage*ITEMS_PER_PAGE)
-					item = self._container.itemsList[int(c)+self._currentPage*ITEMS_PER_PAGE]
-					self.gameClassHandler.player.use(item)
-					break
-
-					# if not item.isUsable:
-					# 	print("Can't use this item")
-					# 	return
-
-					# if item.isEquippable:
-					# 	if item.isEquiped:
-					# 		self.gameClassHandler.player.unequip(item)
-					# 	else:
-					# 		self.gameClassHandler.player.equip(item)
-					# else:
-					# 	for e in item.effects:
-					# 		self.gameClassHandler.player.add_effect(e)
-					# 	self._container.remove(item)
-					# return
+			print("Wich item you want to use?")
+			i = self.input_number(0, ITEMS_PER_PAGE)
+			item = self._container.itemsList[i+self._currentPage*ITEMS_PER_PAGE]
+			self.gameClassHandler.player.use(item)
 			return
 
 		if inputed.equals(self.inputVars["drop"]):
-			print("Wich item you want to drop (print a number or 'c' to cancel)")
-			print("> ", end="")
-			c = input()
-			while(c != 'c'):
-				if int(c) not in range(0, ITEMS_PER_PAGE):
-					print(f"{int(c)} Incorrect input. Please try again")
-					print("> ")
-					c = input()
-				else:
-					item = self._container.itemsList[int(c)+self._currentPage*ITEMS_PER_PAGE]
-					ausmsg = interface.default_message_yes_or_no(f"Are you shure you want to drop {item.name}? This item will be lost forever!")
-					ausmsg.show()
-					ans = ausmsg.get_result()
-					if ans.equals(interface.InputVariant("n", "no")):
-						return
-					self.gameClassHandler.player.drop(item)
-					return
+			print("Wich item you want to drop?")
+			i = self.input_number(0, ITEMS_PER_PAGE)
+			item = self._container.itemsList[i+self._currentPage*ITEMS_PER_PAGE]
+			ausmsg = interface.default_message_yes_or_no(f"Are you shure you want to drop {item.name}? This item will be lost forever!")
+			ausmsg.show()
+			ans = ausmsg.get_inputed_command()
+			if ans.equals(interface.InputVariant("n", "no")):
+				return
+			self.gameClassHandler.player.drop(item)
 			return
 
 		if inputed.equals(self.inputVars["status"]):

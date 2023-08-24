@@ -24,14 +24,6 @@ class Message(Showable):
 		for iv in self.inputVars:
 			iv.show()
 
-	def get_result(self):
-		c = input()
-		for iv in self.inputVars:
-			if iv.command == c:
-				return iv
-		on_wrong_input()
-		return None
-
 	def on_wrong_input(self):
 		pass
 
@@ -48,16 +40,37 @@ class Interface(Showable):
 	def process_commands(self):
 		pass
 
-	def get_input(self):
-		c = input()
-		inputed = None
+	def input(self):
+		print("> ", end="")
+		return input()
+
+	def input_number(self, min = 0, max = 10):
+		ok = False
+		c = ''
+		while not ok:
+			print(f"Please enter a number from {min} to {max-1}, or 'c' to cancel input")
+			c = self.input()
+			if c == 'c':
+				return None
+			try:
+				int(c)
+			except Exception:
+				print("Enter the number")
+				continue
+			if not int(c) in range(min, max):
+				print("Invalid number")
+				continue
+			ok = True
+
+		return int(c)
+
+	def input_command(self):
+		c = self.input()
 		for iv in self.inputVars.values():
 			if iv.command == c:
-				inputed = iv
-		# if inputed == None:				
-		# 	self.on_wrong_input()
-		# 	return None
-		return inputed 
+				return iv
+		self.on_wrong_input()
+		return None
 
 	def show_input_vars(self):
 		for iv in self.inputVars.values():
@@ -173,15 +186,8 @@ class StatusInterface(Interface):
 		
 
 	def process_commands(self):
-		c = input()
-		inputed = None
-		for iv in self.inputVars.values():
-			if iv.command == c:
-				inputed = iv
-		if inputed == None:				
-			self.on_wrong_input()
-			return
-
+		inputed = self.input_command(
+)
 		if inputed.equals(self.inputVars["quit"]):
 			self.gameClassHandler.exit()
 			return

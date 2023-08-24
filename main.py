@@ -65,7 +65,7 @@ class CharacterCreationInterface(interface.Interface):
 
 	def process_commands(self):
 		self.show_input_vars()
-		inputed = self.get_input()
+		inputed = self.input_command()
 
 		if inputed.equals(self.inputVars["change_name"]):
 			self._enter_the_name()
