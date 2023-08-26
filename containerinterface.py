@@ -35,6 +35,7 @@ class ItemDetailsInterface(interface.Interface):
 		inputed = self.input_command()
 
 		if inputed.equals(self.inputVars["quit"]):
+			self._isOpen = False
 			return
 
 		self.on_wrong_input()
@@ -47,6 +48,9 @@ class ContainerInterface(interface.Interface):
 		self._itemsList = []
 		self._start = 0
 		self._end = 0
+
+	def _get_id_from_inputed_number(self, number):
+		return self._currentPage*ITEMS_PER_PAGE + number
 
 	def _get_items_list(self, pageNumber):
 		self._start = pageNumber * ITEMS_PER_PAGE
@@ -69,7 +73,8 @@ class ContainerInterface(interface.Interface):
 			self.inputVars["next_page"] = interface.InputVariant("n", "next page")
 
 		self.inputVars["quit"] = interface.quit_command_builder()
-		self.inputVars["status"] = interface.InputVariant("s", "show status")
+		
+		#self.inputVars["status"] = interface.InputVariant("s", "show status")
 
 	def add_optional_input_vars(self):
 		pass
@@ -104,11 +109,11 @@ class ContainerInterface(interface.Interface):
 		inputed = self.input_command()
 
 		if inputed.equals(self.inputVars["quit"]):
-			self.gameClassHandler.exit()
+			self._isOpen = False
 			return
 		if inputed.equals(self.inputVars["look"]):
 			i = self.input_number(0, ITEMS_PER_PAGE)
-			itInterface = ItemDetailsInterface(self.gameClassHandler, self._container.itemsList[i+self._currentPage*ITEMS_PER_PAGE])
+			itInterface = ItemDetailsInterface(self.gameClassHandler, self._container.itemsList[self._get_id_from_inputed_number(i)])
 			itInterface.show()
 			itInterface.process_commands()
 			return
@@ -122,9 +127,10 @@ class ContainerInterface(interface.Interface):
 				return
 
 
-class PlayerInventoryInterface(ContainerInterface):
-	def __init__(self, gameClassHandler, container):
-		super().__init__(gameClassHandler, container)
+class InventoryInterface(ContainerInterface):
+	def __init__(self, gameClassHandler, holder):
+		self.holder = holder
+		super().__init__(gameClassHandler, holder.inventory)
 
 	def add_optional_input_vars(self):
 		self.inputVars["equip"] = interface.InputVariant("e", "equip/unequip item")
@@ -148,7 +154,7 @@ class PlayerInventoryInterface(ContainerInterface):
 		if inputed.equals(self.inputVars["look"]):
 			print("Wich item you want to look at?")
 			i = self.input_number(0, ITEMS_PER_PAGE)
-			itInterface = ItemDetailsInterface(self.gameClassHandler, self._container.itemsList[i+self._currentPage*ITEMS_PER_PAGE])
+			itInterface = ItemDetailsInterface(self.gameClassHandler, self._container.itemsList[self._get_id_from_inputed_number(i)])
 			itInterface.show()
 			itInterface.process_commands()
 			return
@@ -166,32 +172,32 @@ class PlayerInventoryInterface(ContainerInterface):
 			print("Wich item you want to equip?")
 			i = self.input_number(0, ITEMS_PER_PAGE)
 			if i != None:
-				item = self._container.itemsList[i+self._currentPage*ITEMS_PER_PAGE]
+				item = self._container.itemsList[self._get_id_from_inputed_number(i)]
 				if not item.isEquiped:
-					self.gameClassHandler.player.equip(item)
+					self.holder.equip(item)
 				else:
-					self.gameClassHandler.player.unequip(item)
+					self.holder.unequip(item)
 			return
 
 		if inputed.equals(self.inputVars["use"]):
 			print("Wich item you want to use?")
 			i = self.input_number(0, ITEMS_PER_PAGE)
-			item = self._container.itemsList[i+self._currentPage*ITEMS_PER_PAGE]
-			self.gameClassHandler.player.use(item)
+			item = self._container.itemsList[self._get_id_from_inputed_number(i)]
+			self.holder.use(item)
 			return
 
 		if inputed.equals(self.inputVars["drop"]):
 			print("Wich item you want to drop?")
 			i = self.input_number(0, ITEMS_PER_PAGE)
-			item = self._container.itemsList[i+self._currentPage*ITEMS_PER_PAGE]
+			item = self._container.itemsList[self._get_id_from_inputed_number(i)]
 			ausmsg = interface.default_message_yes_or_no(f"Are you shure you want to drop {item.name}? This item will be lost forever!")
 			ausmsg.show()
 			ans = ausmsg.get_inputed_command()
 			if ans.equals(interface.InputVariant("n", "no")):
 				return
-			self.gameClassHandler.player.drop(item)
+			self.holder.drop(item)
 			return
 
-		if inputed.equals(self.inputVars["status"]):
-			self.gameClassHandler.temp_showstat()
-			return
+		# if inputed.equals(self.inputVars["status"]):
+		# 	self.gameClassHandler.temp_showstat()
+		# 	return

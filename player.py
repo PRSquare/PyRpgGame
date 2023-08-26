@@ -9,7 +9,7 @@ class Quest():
 		self.name = "quest"
 		self.description = "no description"
 		self.target = None # Item
-		self.reward = builder.get_random_element(globaldata.ITEMS.data) 
+		self.reward = builder.get_random_element(globaldata.ITEMS.data).build()
 
 class Journal():
 	def __init__(self):

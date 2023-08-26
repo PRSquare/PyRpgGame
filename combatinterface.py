@@ -32,7 +32,7 @@ class CombatInterface(interface.Interface):
 		inputed = self.input_command(c)
 
 		if inputed.equals(self.inputVars["quit"]):
-			self.gameClassHandler.exit()
+			self._isOpen = False
 			return
 
 		if inputed.equals(self.inputVars["atack"]):
@@ -63,4 +63,8 @@ class CombatInterface(interface.Interface):
 			return
 
 		if inputed.equals(self.inputVars["status"]):
-			i = None
+			print("Choose a target")
+			i = self.input_number(0, len(self._enemies))
+			s = interface.StatusInterface(gameClassHandler, self._enemies[i])
+			s.show()
+			s.process_commands()

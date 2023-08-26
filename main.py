@@ -136,7 +136,7 @@ class fake_game():
 	def temp_showinv(self, container = None):
 		if not container:
 			container = self.player.inventory
-		self.interface = containerinterface.PlayerInventoryInterface(self, container)
+		self.interface = containerinterface.InventoryInterface(self, self.player)
 	def temp_showstat(self, who = None):
 		if not who:
 			who = self.player
@@ -157,6 +157,8 @@ class fake_game():
 		self.interface.update()
 		self.interface.show()
 		self.interface.process_commands()
+		if not self.interface.isOpen:
+			self.exit()
 
 test = fake_game()
 while not test.doExit:

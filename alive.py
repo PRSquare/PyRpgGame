@@ -159,6 +159,8 @@ class Alive():
 		item.isEquiped = True
 		self.apply_item_effects(item)
 
+		self._equipment.append(item)
+
 	
 	def unequip(self, item):
 		if not item.isEquiped:
@@ -173,6 +175,8 @@ class Alive():
 		for slot in self._eqSlots:
 			if slot.item == item:
 				slot.unequip()
+
+		self._equipment.remove(item)
 
 	def use(self, item):
 		if not item.isUsable:

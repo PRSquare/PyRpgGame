@@ -33,6 +33,12 @@ class Interface(Showable):
 	def  __init__(self, gameClassHandler):
 		self.gameClassHandler = gameClassHandler
 		self.inputVars = dict()
+		self._isOpen = True
+
+	@property
+	def isOpen(self):
+		return self._isOpen
+
 	def show(self):
 		pass
 	def update(self):
@@ -145,7 +151,8 @@ class StatusInterface(Interface):
 		self._observable = observable
 		super().__init__(gameClassHandler)
 		self.inputVars["quit"] = quit_command_builder()
-		self.inputVars["inventory"] = InputVariant("i", "inventory")
+		
+		# self.inputVars["inventory"] = InputVariant("i", "inventory")
 
 		self.update()
 
@@ -182,15 +189,14 @@ class StatusInterface(Interface):
 
 		print("\n\n")
 		self.show_input_vars()
-		print(">", end="")
 		
 
 	def process_commands(self):
-		inputed = self.input_command(
-)
+		inputed = self.input_command()
+
 		if inputed.equals(self.inputVars["quit"]):
-			self.gameClassHandler.exit()
+			self._isOpen = False
 			return
 
-		if inputed.equals(self.inputVars["inventory"]):
-			self.gameClassHandler.temp_showinv()
+		# if inputed.equals(self.inputVars["inventory"]):
+		# 	self.gameClassHandler.temp_showinv()
