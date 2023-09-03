@@ -1,7 +1,7 @@
 import item
 
 class Container():
-	def __init__(self, holder):
+	def __init__(self, holder = None):
 		self.name = ""
 		if holder != None:
 			self.name = f"{holder.name}'s inventory"
@@ -36,18 +36,19 @@ class Container():
 				return	
 		try:
 			self._itemsList.remove(item)
-			item.holder = None
 		except ValueError:
 			raise
 
-	def remove_by_id(self, id, ignoreProtection = False):
+	def remove_by_id(self, it_id, ignoreProtection = False):
+		if not it_id in range(0, len(self._itemsList)):
+			raise IndexError
+		
+		item = self._itemsList[it_id]
+
 		if not ignoreProtection:
 			if item.isProtected:
 				return
-		if i in range(0, len(self._itemsList)):
-			raise IndexError
-		item = self._itemsList.pop(id)
-		item.holder = None
+		self.remove(item, ignoreProtection)
 		return item
 
 	def count_items(self):

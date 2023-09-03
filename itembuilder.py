@@ -93,7 +93,8 @@ class ItemBuilder(builder.Builder):
 		i.isProtected = self.isProtected
 		i.usagesNumber = builder.get_random_element(self.usagesNumber)
 		i.rarity = self.rarity
-		
+		i.price = self.price
+
 		efOption = builder.get_random_element(self.effectsVariants)
 		if efOption:
 			for ef in efOption:

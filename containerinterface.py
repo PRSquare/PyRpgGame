@@ -26,14 +26,8 @@ class ItemDetailsInterface(interface.Interface):
 		for e in effectsStr:
 			print(e)
 		print()
-		self.show_input_vars()
 
-	def update(self):
-		pass
-
-	def process_commands(self):
-		inputed = self.input_command()
-
+	def _input_processor(self, inputed):
 		if inputed.equals(self.inputVars["quit"]):
 			self._isOpen = False
 			return
@@ -80,6 +74,7 @@ class ContainerInterface(interface.Interface):
 		pass
 
 	def show(self):
+		self.update()
 		print("--------------------------------------------------------")
 		print(f"\t\t{self._container.name}:")
 		pagesN = int(self._container.count_items() / ITEMS_PER_PAGE)
@@ -96,27 +91,25 @@ class ContainerInterface(interface.Interface):
 			print()
 			j += 1
 		print("--------------------------------------------------------")
-		self.show_input_vars()
+		
 
 	def update(self):
 		self._itemsList = self._get_items_list(self._currentPage)
 		self._rebuild_input_vars()
 
-	def on_wrong_input(self):
-		pass
-
-	def process_commands(self):
-		inputed = self.input_command()
-
+	def _input_processor(self, inputed):
+		
 		if inputed.equals(self.inputVars["quit"]):
 			self._isOpen = False
 			return
 		if inputed.equals(self.inputVars["look"]):
 			i = self.input_number(0, ITEMS_PER_PAGE)
 			itInterface = ItemDetailsInterface(self.gameClassHandler, self._container.itemsList[self._get_id_from_inputed_number(i)])
-			itInterface.show()
-			itInterface.process_commands()
+			while itInterface.isOpen:
+				itInterface.show()
+				itInterface.process_commands()
 			return
+
 		if "prev_page" in self.inputVars.keys():
 			if inputed.equals(self.inputVars["prev_page"]):
 				self._currentPage -= 1
@@ -137,36 +130,10 @@ class InventoryInterface(ContainerInterface):
 		self.inputVars["drop"] = interface.InputVariant("d", "drop item")
 		self.inputVars["use"] = interface.InputVariant("u", "use item")
 
-	def process_commands(self):
-		print("> ", end="")
-		c = input()
-		inputed = None
-		for iv in self.inputVars.values():
-			if iv.command == c:
-				inputed = iv
-		if inputed == None:				
-			self.on_wrong_input()
-			return
 
-		if inputed.equals(self.inputVars["quit"]):
-			self.gameClassHandler.exit()
-			return
-		if inputed.equals(self.inputVars["look"]):
-			print("Wich item you want to look at?")
-			i = self.input_number(0, ITEMS_PER_PAGE)
-			itInterface = ItemDetailsInterface(self.gameClassHandler, self._container.itemsList[self._get_id_from_inputed_number(i)])
-			itInterface.show()
-			itInterface.process_commands()
-			return
+	def _input_processor(self, inputed):
 
-		if "prev_page" in self.inputVars.keys():
-			if inputed.equals(self.inputVars["prev_page"]):
-				self._currentPage -= 1
-				return
-		if "next_page" in self.inputVars.keys():
-			if inputed.equals(self.inputVars["next_page"]):
-				self._currentPage += 1
-				return
+		super()._input_processor(inputed)
 
 		if inputed.equals(self.inputVars["equip"]):
 			print("Wich item you want to equip?")
@@ -197,7 +164,3 @@ class InventoryInterface(ContainerInterface):
 				return
 			self.holder.drop(item)
 			return
-
-		# if inputed.equals(self.inputVars["status"]):
-		# 	self.gameClassHandler.temp_showstat()
-		# 	return

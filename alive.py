@@ -30,22 +30,23 @@ class EquipementSlot():
 		return self.equals(item.slot)
 
 class Alive():
+	_name = None
+	_health = None
+	maxHealth = 100
+	_experience = None
+	money = 0
+	_isDead = False
+
+	_equipment = []
+	_eqSlots = []
+	_effects = []
+	
+	_damageList = []
+	_resistances = []
+	_damageModificators = []
+	inventory = None
+
 	def __init__(self):
-		self._name = None
-		self._health = None
-		self.maxHealth = 100
-		self._experience = None
-		
-		self._isDead = False
-
-		self._equipment = []
-		self._eqSlots = []
-		self._effects = []
-
-		self._damageList = []
-		self._resistances = []
-		self._damageModificators = []
-
 		self.inventory = container.Container(self)
 
 # Properties

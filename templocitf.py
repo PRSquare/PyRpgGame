@@ -14,8 +14,9 @@ def quest_to_str(quest):
 	return retstr
 
 class TavernInterface(interface.Interface):
-	def __init__(self, gameClassHandler):
+	def __init__(self, gameClassHandler, tavern):
 		super().__init__(gameClassHandler)
+		self.tavern = tavern
 		self.inputVars["take_quest"] = interface.InputVariant('t', "take quest")
 		
 		self.inputVars["shop"] = interface.InputVariant('h', "go to shop")
@@ -26,16 +27,12 @@ class TavernInterface(interface.Interface):
 
 		self.inputVars["quit"] = interface.InputVariant('q', "quit")
 
-		self.tavern = self.gameClassHandler.tavern 
-
 	def show(self):
-		for quest in self.tavern.available_quests
+		for quest in self.tavern.available_quests:
 			print(quest_to_str(quest))
 
-	def process_commands():
-		self.show_input_vars()
-		inputed = self.input_command()
-
+	def _input_processor(self, inputed):
+		
 		if inputed.equals(self.inputVars["take_quest"]):
 			i = self.input_number(0, len(self.tavern.available_quests))
 			# Take quest
@@ -53,13 +50,13 @@ class TavernInterface(interface.Interface):
 				stat.process_commands()
 
 		if inputed.equals(self.inputVars["inventory"]):
-			inv = containerinterface.ContainerInterface(self.gameClassHandler, self.gameClassHandler.player.inventory)
+			inv = containerinterface.InventoryInterface(self.gameClassHandler, self.gameClassHandler.player)
 			while inv.isOpen:
 				inv.show()
-				imv.process_commands()
+				inv.process_commands()
 
-			if inputed.equals(self.inputVars["quit"]):
-				self._isOpen = False
+		if inputed.equals(self.inputVars["quit"]):
+			self._isOpen = False
 
 
 
@@ -72,17 +69,20 @@ class BuyInterface(containerinterface.ContainerInterface):
 
 	def update(self):
 		super().update()
+		self.inputVars["buy"] = interface.InputVariant('b', "by item")
 
 	def show(self):
 		super().show()
+		print(f"______________________________\nYou have {self.gameClassHandler.player.money} coins\n")
 
-	def process_commands(self):
-		super.process_commands()
-		
-		inputed = self.input_command()
+	def _input_processor(self, inputed):
+		super()._input_processor(inputed)
+
 		if inputed.equals(self.inputVars["buy"]):
 			i = self.input_number(0, containerinterface.ITEMS_PER_PAGE)
-			self.gameClassHandler.player.inventory.add_item(self.shop.sell_at(self._get_id_from_inputed_number(i)))
+			item = self.shop.sell_at(self._get_id_from_inputed_number(i))
+			self.gameClassHandler.player.money -= item.price
+			self.gameClassHandler.player.inventory.add_item(item)
 
 class SellInterface(containerinterface.ContainerInterface):
 	def __init__(self, gameClassHandler, shop):
@@ -92,17 +92,20 @@ class SellInterface(containerinterface.ContainerInterface):
 
 	def update(self):
 		super().update()
+		self.inputVars["sell"] = interface.InputVariant('s', "sell item")
 
 	def show(self):
 		super().show()
+		print(f"______________________________\nYou have {self.gameClassHandler.player.money} coins\n")
 
-	def process_commands(self):
-		super.process_commands()
+	def _input_processor(self, inputed):
+		super()._input_processor(inputed)
 		
-		inputed = self.input_command()
 		if inputed.equals(self.inputVars["sell"]):
 			i = self.input_number(0, containerinterface.ITEMS_PER_PAGE)
-			self.shop.buy(self.gameClassHandler.player.inventory.remove_buy_id(self._get_id_from_inputed_number(i)))
+			item = self.gameClassHandler.player.inventory.remove_by_id(self._get_id_from_inputed_number(i))
+			self.shop.buy(item)
+			self.gameClassHandler.player.money += item.price
 			
 
 
@@ -126,6 +129,67 @@ class ShopInterface(interface.Interface):
 	def show(self):
 		print("Welcom to Mallwart!")
 
-	def process_commands(self):
-		inputed = self.input_command()
+	def _input_processor(self, inputed):
+		
+		if inputed.equals(self.inputVars["sell"]):
+			si = SellInterface(self.gameClassHandler, self.shop)
+			while si.isOpen:
+				si.show()
+				si.process_commands()
 
+
+		if inputed.equals(self.inputVars["buy"]):
+			bi = BuyInterface(self.gameClassHandler, self.shop)
+			while bi.isOpen:
+				bi.show()
+				bi.process_commands()	
+
+		if inputed.equals(self.inputVars["tavern"]):
+			self.gameClassHandler.go_to_tavern()
+
+		if inputed.equals(self.inputVars["journey"]):
+			self.gameClassHandler.go_to_journey()
+
+		if inputed.equals(self.inputVars["status"]):
+			stat = interface.StatusInterface(self.gameClassHandler, self.gameClassHandler.player)
+			while stat.isOpen:
+				stat.show()
+				stat.process_commands()
+
+		if inputed.equals(self.inputVars["inventory"]):
+			inv = containerinterface.InventoryInterface(self.gameClassHandler, self.gameClassHandler.player)
+			while inv.isOpen:
+				inv.show()
+				inv.process_commands()
+
+		if inputed.equals(self.inputVars["quit"]):
+			self._isOpen = False
+
+
+class JourneyInterface(interface.Interface):
+	def __init__(self, gameClassHandler, location):
+		super().__init__(gameClassHandler)
+		self.location = location
+
+		self.inputVars["quit"] = interface.InputVariant('q', "quit")
+
+
+	def show(self):
+		pass
+
+	def _input_processor(self, inputed):
+		
+		if inputed.equals(self.inputVars["status"]):
+			stat = interface.StatusInterface(self.gameClassHandler, self.gameClassHandler.player)
+			while stat.isOpen:
+				stat.show()
+				stat.process_commands()
+
+		if inputed.equals(self.inputVars["inventory"]):
+			inv = containerinterface.InventoryInterface(self.gameClassHandler, self.gameClassHandler.player)
+			while inv.isOpen:
+				inv.show()
+				inv.process_commands()
+
+		if inputed.equals(self.inputVars["quit"]):
+			self._isOpen = False

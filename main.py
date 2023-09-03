@@ -8,6 +8,9 @@ import damage
 import globaldata
 import loader
 import temp as t
+import shop
+import templocitf as tui
+import tavern
 
 class CharacterCreationInterface(interface.Interface):
 	def __init__(self, gameClassHandler):
@@ -63,10 +66,8 @@ class CharacterCreationInterface(interface.Interface):
 			eq.append(globaldata.ITEMS.get("water_wand").build())
 		return eq
 
-	def process_commands(self):
-		self.show_input_vars()
-		inputed = self.input_command()
-
+	def _input_processor(self, inputed):
+		
 		if inputed.equals(self.inputVars["change_name"]):
 			self._enter_the_name()
 			return
@@ -95,6 +96,7 @@ class Game():
 STATUS_EXIT = 0
 STATUS_CONTINUE = 1
 
+
 class fake_game():
 	def __init__(self):
 		self.doExit = False
@@ -108,7 +110,13 @@ class fake_game():
 		while self.player == None:
 			create_char.process_commands()
 
-		self.interface = interface.StatusInterface(self, self.player)
+		self.shop = shop.Shop()
+		self.shop.available_items = list(globaldata.ITEMS.data.values())
+		self.shop.gen_items()
+
+		self.tavern = tavern.Tavern()
+
+		self.interface = tui.TavernInterface(self, self.tavern)
 
 		self.currentLocation = globaldata.LOCATIONS.get("forest")
 
@@ -132,6 +140,12 @@ class fake_game():
 
 		# self.interface = combatinterface.CombatInterface(self, self.player, self.enemiesList)
 
+	def go_to_shop(self):
+		self.interface = tui.ShopInterface(self, self.shop)
+	def go_to_journey(self):
+		return
+	def go_to_tavern(self):
+		self.interface = tui.TavernInterface(self, self.tavern)
 
 	def temp_showinv(self, container = None):
 		if not container:
@@ -152,9 +166,6 @@ class fake_game():
 
 	def update(self):
 		self.player.update_effects()
-		# for e in self.enemiesList:
-		# 	e.update_effects()
-		self.interface.update()
 		self.interface.show()
 		self.interface.process_commands()
 		if not self.interface.isOpen:

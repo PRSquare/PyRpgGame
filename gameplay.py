@@ -49,14 +49,14 @@ class Gameplay():
 
 class CharacterCreation(Gameplay):
 	def __init__(self, gameClass):
-		super.__init__(gameClass)
+		super().__init__(gameClass)
 
 	def process_commands(self):
-		super.process_commands()
+		super().process_commands()
 
 class InventoryMenuGameplay(Gameplay):
 	def __init__(self, gameClass):
-		super.__init__(gameClass)
+		super().__init__(gameClass)
 		self._interfacePage = 0
 		for vc in ["+", "-", "0"]:
 			self._valid_comands.append(vc)
@@ -93,7 +93,7 @@ class InventoryMenuGameplay(Gameplay):
 
 	def process_commands(self):
 		
-		super.process_commands()
+		super().process_commands()
 		if self._comand == "0":
 			# exit
 			return 0
@@ -110,35 +110,35 @@ class InventoryMenuGameplay(Gameplay):
 
 class TownGameplay(Gameplay):
 	def __init__(self, gameClass):
-		super.__init__(gameClass)
+		super().__init__(gameClass)
 
 	def process_commands(self):
-		super.process_commands()
+		super().process_commands()
 
 class TavernGameplay(Gameplay):
 	def __init__(self, gameClass):
-		super.__init__(gameClass)
+		super().__init__(gameClass)
 
 	def process_commands(self):
-		super.process_commands()
+		super().process_commands()
 
 class ShopGameplay(Gameplay):
 	def __init__(self, gameClass):
-		super.__init__(gameClass)
+		super().__init__(gameClass)
 
 	def process_commands(self):
-		super.process_commands()
+		super().process_commands()
 
 class JourneyGameplay(Gameplay):
 	def __init__(self, gameClass):
-		super.__init__(gameClass)
+		super().__init__(gameClass)
 
 	def process_commands(self):
-		super.process_commands()
+		super().process_commands()
 
 class CombatGameplay(Gameplay):
 	def __init__(self, gameClass):
-		super.__init__(gameClass)
+		super().__init__(gameClass)
 
 	def process_commands(self):
-		super.process_commands()
+		super().process_commands()

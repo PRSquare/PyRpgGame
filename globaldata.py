@@ -1,3 +1,5 @@
+import copy
+
 class DataHolder():
 	
 	def __init__(self):
@@ -6,7 +8,7 @@ class DataHolder():
 
 	@property
 	def data(self):
-		return self._data
+		return copy.copy(self._data)
 	
 	def add(self, name, value):
 		if name in self._data.keys():

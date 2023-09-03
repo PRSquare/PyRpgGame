@@ -43,8 +43,6 @@ class Interface(Showable):
 		pass
 	def update(self):
 		pass
-	def process_commands(self):
-		pass
 
 	def input(self):
 		print("> ", end="")
@@ -84,6 +82,18 @@ class Interface(Showable):
 	def on_wrong_input(self):
 		print("Unknown command. Please try again")
 		self.show_input_vars()
+
+
+	def _input_processor(self, inputed):
+		pass
+
+	def process_commands(self):
+		self.show_input_vars()
+		inputed = self.input_command()
+		if inputed:
+			self._input_processor(inputed)
+		else:
+			self.on_wrong_input()
 
 def default_message_yes_or_no(text):
 	return Message(
@@ -188,15 +198,12 @@ class StatusInterface(Interface):
 			print(dm)
 
 		print("\n\n")
-		self.show_input_vars()
-		
 
-	def process_commands(self):
-		inputed = self.input_command()
-
+	def _input_processor(self, inputed):
 		if inputed.equals(self.inputVars["quit"]):
 			self._isOpen = False
 			return
 
+		
 		# if inputed.equals(self.inputVars["inventory"]):
 		# 	self.gameClassHandler.temp_showinv()

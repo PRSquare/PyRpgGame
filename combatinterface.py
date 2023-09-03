@@ -26,11 +26,8 @@ class CombatInterface(interface.Interface):
 	def update(self):
 		pass
 
-	def process_commands(self):
-		print("> ", end="")
-
-		inputed = self.input_command(c)
-
+	def _input_processor(self, inputed):
+		
 		if inputed.equals(self.inputVars["quit"]):
 			self._isOpen = False
 			return

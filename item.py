@@ -13,6 +13,7 @@ class Item:
 		self.isProtected = False # Can't remove item if it is protected
 		self.usagesNumber = 1
 		self.rarity = 0
+		self.price = 0
 
 	@property
 	def isUsed(self):

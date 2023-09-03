@@ -40,6 +40,7 @@ class Player(alive.Alive):
 		self.name = "Player"
 		self.health = 100
 		self.experience = 100
+		self.money = 10000
 
 		self.eqSlots.append(alive.EquipementSlot("hand"))
 		self.eqSlots.append(alive.EquipementSlot("hand"))
