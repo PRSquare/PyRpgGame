@@ -2,21 +2,17 @@ import random
 import builder
 
 class MonsterSpawn(builder.Builder):
+	_amount = []
+	_monsterB = None
 
-	def __init__(self):
-		self._amont = []
-		self._monsterB = None
-
+#____________________ properties ____________________
 	@property
-	def amont(self):
-		return self._amont
-	@amont.setter
-	def amont(self, val):
+	def amount(self):
+		return self._amount
+	@amount.setter
+	def amount(self, val):
 		if val != None:
-			if isinstance(val, int):
-				self._amont = [val, val]
-			else:
-				self._amont = val
+			pass
 
 	@property
 	def monster(self):
@@ -26,62 +22,29 @@ class MonsterSpawn(builder.Builder):
 		if val != None:
 			self._monsterB = val
 
+#____________________ public methods ____________________
 	def build(self):
-		n = random.randrange(1, self._amont)
+		n = random.randrange(1, self._amount)
 		ret_monsters_list = []
 		for i in range(0, n):
 			ret_monsters_list.append(self._monsterB.build())
 		return ret_monsters_list
 
 			
-
+class LocCell():
+	monsters = []
+	items = []
 
 class Location():
-	def __init__(self):
-		self.name = None
-		self.spawn_vars = [[]]
-		self.bossfight = []
-		self.quest_items = [] # cellNumber : item
-		self._currentPlayerPose = 0
-		self.isFinished = False
-		self.size = 10
+	name = None
+	spawnVars = [[]]
+	bossfight = []
+	_currentPlayerPose = 0
+	isFinished = False
+	_size = 10
+	cells = []
 
-	def getCell(self):
-		retMonstersPack = []
-
-		if not self.currentPlayerPose < self.size:
-			for b in self.bossfight:
-				retMonstersPack.append(b)
-			
-			self.currentPlayerPose += 1
-
-			sv = builder.get_random_element(spawn_vars)
-			if sv:
-				for spawn in sv:
-					for monster in spawn.buiild():
-						retMonstersPack.append(monster)
-
-
-			return retMonstersPack
-
-
-		
-		
-		self.currentPlayerPose += 1
-
-		return retMonstersPack
-
-	def getLoot(self):
-		loot = []
-		for qi in self.quest_items:
-			if qi[0] == self.currentPlayerPose:
-				loot.append(qi[1])
-		return loot
-				
-
-	def reset(self):
-		self._currentPlayerPose = 0
-
+#____________________ properties ____________________
 	@property
 	def currentPlayerPose(self):
 		return self._currentPlayerPose
@@ -98,7 +61,58 @@ class Location():
 		elif isFinished == True:
 			isFinished = False
 
+
+	@property
+	def size(self):
+		return self._size
+	@size.setter
+	def size(self, val):
+		if val != None:
+			self._size = val
+
+
+#____________________ public methods ____________________
+	
+	def __init__(self, size = 10):
+		self.size = size
+
+	def generate(self):
+		cells.clear()
+		for i in range(0, size):
+			cells.append(LocCell())
+
+	def spawnMonsters(self, poition):
+		sv = builder.get_random_element(self.spawnVars)
+		if sv:
+			for spawn in sv:
+				pass
+
+		self.cells[position].monsters.append(None) # monster
+
+	def placeItem(self, position, item):
+		self.cells[position].items.append(item)
+
+	def placeMonster(self, position, monster):
+		self.cells[position].monsters.append(monster) 
+
+	def getNextCell(self):
+		if not self.isFinished:
+			self.currentPlayerPose += 1
+			self.getCell(self.currentPlayerPose)
+
+	def getCell(self, position):
+		return self.cells[position]
+
+	def getLoot(self):
+		pass
 		
+				
+
+	def reset(self):
+		self._currentPlayerPose = 0
+		self.generate()
+
+#____________________ private methods ____________________
 	def __generate_location(self, difficulty, size):
 		pass
 	def __place_quest_item(self, item, position):
