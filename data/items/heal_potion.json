@@ -10,8 +10,8 @@
 			{
 				"type" : "res_health",
 				"name" : "healing",
+				"duration" : [5, 10],
 				"options" : {
-								"duration" : [5, 10],
 								"strength" : [2, 5]
 							}
 			}

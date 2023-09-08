@@ -9,11 +9,11 @@
 			{"name" : "orc", "amount" : [1, 2]}
 		],
 		[
-			{"name" : "kobalt", "amount" : [2, 5]},
+			{"name" : "kobold", "amount" : [2, 5]},
 			{"name" : "goblin", "amount" : [1, 2]}
 		],
 		[
-			{"name" : "kobalt", "amount" : [3, 4]}
+			{"name" : "kobold", "amount" : [3, 4]}
 		],
 		[
 			{"name" : "hob_goblin", "amount" : [2, 3]}

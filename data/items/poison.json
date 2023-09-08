@@ -11,8 +11,8 @@
 				"type" : "dec_health",
 				"name" : "poison",
 				"description" : "You are poisoned!",
+				"duration" : [5, 10],
 				"options" : {
-								"duration" : [5, 10],
 								"strength" : [2, 5]
 							}
 			}

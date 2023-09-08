@@ -1,5 +1,5 @@
 {
-	"name" : "kobalt",
+	"name" : "kobold",
 	"health" : [50, 50],
 	"slots" : [
 		"hand", "hand", "legs", "torso", "head", "finger", "finger", "finger", "finger"

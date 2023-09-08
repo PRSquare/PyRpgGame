@@ -104,7 +104,10 @@ class ContainerInterface(interface.Interface):
 			return
 		if inputed.equals(self.inputVars["look"]):
 			i = self.input_number(0, ITEMS_PER_PAGE)
-			itInterface = ItemDetailsInterface(self.gameClassHandler, self._container.itemsList[self._get_id_from_inputed_number(i)])
+			itInterface = ItemDetailsInterface( 
+				self.gameClassHandler, 
+				self._container.at(self._get_id_from_inputed_number(i)) 
+			)
 			while itInterface.isOpen:
 				itInterface.show()
 				itInterface.process_commands()
@@ -139,7 +142,7 @@ class InventoryInterface(ContainerInterface):
 			print("Wich item you want to equip?")
 			i = self.input_number(0, ITEMS_PER_PAGE)
 			if i != None:
-				item = self._container.itemsList[self._get_id_from_inputed_number(i)]
+				item = self._container.at(self._get_id_from_inputed_number(i))
 				if not item.isEquiped:
 					self.holder.equip(item)
 				else:
@@ -149,14 +152,14 @@ class InventoryInterface(ContainerInterface):
 		if inputed.equals(self.inputVars["use"]):
 			print("Wich item you want to use?")
 			i = self.input_number(0, ITEMS_PER_PAGE)
-			item = self._container.itemsList[self._get_id_from_inputed_number(i)]
+			item = self._container.at(self._get_id_from_inputed_number(i))
 			self.holder.use(item)
 			return
 
 		if inputed.equals(self.inputVars["drop"]):
 			print("Wich item you want to drop?")
 			i = self.input_number(0, ITEMS_PER_PAGE)
-			item = self._container.itemsList[self._get_id_from_inputed_number(i)]
+			item = self._container.at(self._get_id_from_inputed_number(i))
 			ausmsg = interface.default_message_yes_or_no(f"Are you shure you want to drop {item.name}? This item will be lost forever!")
 			ausmsg.show()
 			ans = ausmsg.get_inputed_command()

@@ -2,16 +2,33 @@ import alive
 import globaldata
 import builder
 
-class Quest():
-	def __init__():
-		self.isComplited = False
-		self.isRuined = False
-		self.name = "quest"
-		self.description = "no description"
-		self.target = None # Item
+import main # listener
+
+class Quest(main.Listener):
+	isComplited = False
+	isRuined = False
+	name = "quest"
+	description = "no description"
+	questType = None
+
+	target = None
+	amount = 0
+
+	reward = None # Item
+
+	def __init__(self):
 		self.reward = builder.get_random_element(globaldata.ITEMS.data).build()
 
-class Journal():
+	def on_notify(self, val):
+		if val != target:
+			return
+		if self.amount > 0:
+			self.amount -= 1
+			return
+
+		isComplited = True
+
+class Journal(main.Notifyer):
 	def __init__(self):
 		self.questlist = []
 		self._questLimit = 3
@@ -29,6 +46,12 @@ class Journal():
 			return False
 		self.questlist.append(quest)
 		return True
+
+	def update(self):
+		for q in self.questlist:
+			if q.isComplited:
+				self.questlist.remove(q)
+
 	def remove(self, quest):
 		self.questlist.remove(quest)
 
@@ -55,4 +78,8 @@ class Player(alive.Alive):
 		self.eqSlots.append(alive.EquipementSlot("legs"))
 
 		self.journal = Journal()
+
+	def update():
+		self.update_effects()
+		self.journal.update()
 	

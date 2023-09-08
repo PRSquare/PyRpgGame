@@ -120,10 +120,17 @@ def print_effects(e):
 
 
 if __name__ == "__main__":
-	pl = create_player()
-	gb = create_goblin()
-	sword_for_player = create_sword()
-	pl.equip(sword_for_player)
-	pl.equip(create_ring())
-	pl.update_effects()
-	gb.update_effects()
+	# pl = create_player()
+	# gb = create_goblin()
+	# sword_for_player = create_sword()
+	# pl.equip(sword_for_player)
+	# pl.equip(create_ring())
+	# pl.update_effects()
+	# gb.update_effects()
+
+	tlist = [0, 1, 2, 3, 4, 5]
+	for i in tlist:
+		if i == 3:
+			tlist.remove(i)
+
+	print(tlist)

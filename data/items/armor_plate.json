@@ -9,7 +9,7 @@
 	"effects" : [ [
 		{
 			"type" : "resist",
-			"name" : "physical damage resistance",
+			"name" : "physictal damage resistance",
 			"duration" : -1,
 			"options" : {
 				"type" : "physical",

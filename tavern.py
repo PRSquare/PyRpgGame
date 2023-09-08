@@ -5,7 +5,7 @@ import builder
 class Tavern():
 	def __init__(self):
 		self.available_quests = []
-		self.questsAmount = 2
+		self.questsAmount = 3
 	def gen_quests(self, location, rewards):
 		self.available_quests.clear()
 		for i in range(0, self.questsAmount):
@@ -26,3 +26,12 @@ class Tavern():
 
 	def get_quest_by_id(self, qid):
 		return self.available_quests.pop(qid)
+	
+
+	def finish_quest(self, quest, pl):
+		if pl.inventory.contains(quest.target):
+			pl.inventory.remove(quest.target, True)
+			pl.inventory.add_item(quest.reward)
+			quest.isComplited = True
+			return True
+		return False

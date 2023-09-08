@@ -13,7 +13,7 @@ class Container():
 			self.name = f"{self._holder.name}'s inventory"
 	@property
 	def itemsList(self):
-		return self._itemsList;
+		return self._itemsList.copy()
 
 
 	def at(self, id):

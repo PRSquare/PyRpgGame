@@ -96,15 +96,49 @@ class Game():
 STATUS_EXIT = 0
 STATUS_CONTINUE = 1
 
+class Listener():
+	target = None
+	def on_notify(self, val):
+		pass
+
+class Notifyer():
+	listeners = []
+
+	def notify(self, target = None):
+		for l in self.listeners:
+			l.on_notify(target)
+
+	def add_listener(self, listener):
+		if not listener in self.listeners:
+			self.listeners.append(listener)
+	def remove_listener(self, listener):
+		self.listener.remove(listener)
+
+	def clear_listeners(self):
+		self.listeners.clear()
+
 
 class fake_game():
+	doExit = False
+
+	player = None
+	shop = None
+	tavern = None
+	interface = None
+	currentLocation = None
+
+	enemyKilledNotifyer = None
+	itemPickedUpNotifyer = None
+
+	anyEnemyKilledNotifyer = None
+	anyItemPickedUpNotifyer = None
+
 	def __init__(self):
-		self.doExit = False
 
 		loader.load_all_items(loader.get_data("data/tecnical/items.json"))
 		loader.load_all_monsters(loader.get_data("data/tecnical/monsters.json"))
 		loader.load_all_locations(loader.get_data("data/tecnical/locations.json"))
-		self.player = None
+
 		create_char = CharacterCreationInterface(self)
 		create_char.show()
 		while self.player == None:
@@ -119,26 +153,6 @@ class fake_game():
 		self.interface = tui.TavernInterface(self, self.tavern)
 
 		self.currentLocation = globaldata.LOCATIONS.get("forest")
-
-		# sword_for_player = t.create_sword()
-		# self.player.inventory.add_item(sword_for_player)
-		# self.player.equip(sword_for_player)
-		# self.player.equip(t.create_armor_plate())
-		# # self.player.equip(t.create_ring())
-		# # self.player.equip(t.create_armor_plate())
-		# # self.player.add_effect(t.EPoison(self.player))
-		# # self.player.add_effect(t.EIncreaceDamage(self.player))
-
-		# self.player.inventory.add_item(t.create_poison())
-		# self.player.inventory.add_item(t.create_quest_item())
-
-		# self.enemiesList = []
-		# for i in range(0, 2):
-		# 	g = t.create_goblin()
-		# 	g.equip(t.create_sword())
-		# 	self.enemiesList.append(g)
-
-		# self.interface = combatinterface.CombatInterface(self, self.player, self.enemiesList)
 
 	def go_to_shop(self):
 		self.interface = tui.ShopInterface(self, self.shop)
