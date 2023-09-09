@@ -79,7 +79,10 @@ class CharacterCreationInterface(interface.Interface):
 			return
 
 		if inputed.equals(self.inputVars["start"]):
-			pl = player.Player()
+			pl = PlayerClassNotif(self.gameClassHandler.targetKilledNotifyer, 
+				self.gameClassHandler.itemPickedUpNotifyer, 
+				self.gameClassHandler.itemDropedNotifyer
+			)
 			pl.name = self.name
 			for e in self.get_equipemet_by_class(self.plClass):
 				pl.inventory.add_item(e)
@@ -87,7 +90,9 @@ class CharacterCreationInterface(interface.Interface):
 			return
 
 
-			
+
+
+
 
 class Game():
 	def __init__(self):
@@ -98,15 +103,21 @@ STATUS_CONTINUE = 1
 
 class Listener():
 	target = None
-	def on_notify(self, val):
+	isActive = True
+	def target_fits(self, target):
+		return self.target == target
+	def on_notify(self):
 		pass
 
 class Notifyer():
 	listeners = []
 
-	def notify(self, target = None):
-		for l in self.listeners:
-			l.on_notify(target)
+	def notify(self, target):
+		print(target)
+		# for l in self.listeners:
+		# 	if l.target_fits(target):
+		# 		l.on_notify()
+		# self._update_listeners()
 
 	def add_listener(self, listener):
 		if not listener in self.listeners:
@@ -117,6 +128,36 @@ class Notifyer():
 	def clear_listeners(self):
 		self.listeners.clear()
 
+	def _update_listeners(self):
+		for l in self.listeners:
+			if not l.isActive:
+				self.remove_listener(l)
+
+
+class PlayerClassNotif(player.Player):
+	onKillNotifyer = None
+	onItemAddedNotifyer = None
+	onItemDroppedNotifyer = None
+	def __init__(self, onKillNotifyer, onItemAddedNotifyer, onItemDroppedNotifyer, name="Player"):
+		super().__init__(name)
+		self.onKillNotifyer = onKillNotifyer
+		self.onItemAddedNotifyer = onItemAddedNotifyer
+		self.onItemDroppedNotifyer = onItemDroppedNotifyer
+
+	def add_item(self, item):
+		if super().add_item(item):
+			self.onItemAddedNotifyer.notify(item)
+			return True
+		return False
+	def drop(self, item):
+		if super().drop(item):
+			self.onItemDroppedNotifyer.notify(item)
+			return True
+		return False
+
+	def kill(self):
+		self.onKillNotifyer.notify(self)
+		super().kill()
 
 class fake_game():
 	doExit = False
@@ -127,13 +168,15 @@ class fake_game():
 	interface = None
 	currentLocation = None
 
-	enemyKilledNotifyer = None
+	targetKilledNotifyer = None
 	itemPickedUpNotifyer = None
-
-	anyEnemyKilledNotifyer = None
-	anyItemPickedUpNotifyer = None
+	itemDropedNotifyer = None
 
 	def __init__(self):
+
+		self.targetKilledNotifyer = Notifyer()
+		self.itemDropedNotifyer = Notifyer()
+		self.itemPickedUpNotifyer = Notifyer()
 
 		loader.load_all_items(loader.get_data("data/tecnical/items.json"))
 		loader.load_all_monsters(loader.get_data("data/tecnical/monsters.json"))

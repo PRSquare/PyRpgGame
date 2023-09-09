@@ -2,9 +2,7 @@ import alive
 import globaldata
 import builder
 
-import main # listener
-
-class Quest(main.Listener):
+class Quest():
 	isComplited = False
 	isRuined = False
 	name = "quest"
@@ -28,7 +26,7 @@ class Quest(main.Listener):
 
 		isComplited = True
 
-class Journal(main.Notifyer):
+class Journal():
 	def __init__(self):
 		self.questlist = []
 		self._questLimit = 3

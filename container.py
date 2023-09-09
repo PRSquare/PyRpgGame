@@ -27,29 +27,33 @@ class Container():
 
 	def add_item(self, item):
 		if not item in self._itemsList:
-			item.holder = self._holder
 			self._itemsList.append(item)
+			return True
+		return False
 
 	def remove(self, item, ignoreProtection = False):
 		if not ignoreProtection:
 			if item.isProtected:
-				return	
+				return False
 		try:
 			self._itemsList.remove(item)
 		except ValueError:
-			raise
+			return False
+		return True
 
 	def remove_by_id(self, it_id, ignoreProtection = False):
 		if not it_id in range(0, len(self._itemsList)):
-			raise IndexError
+			# raise IndexError
+			return False
 		
 		item = self._itemsList[it_id]
 
 		if not ignoreProtection:
 			if item.isProtected:
-				return
+				return False
 		self.remove(item, ignoreProtection)
-		return item
+		return True
+	
 
 	def count_items(self):
 		return len(self._itemsList)

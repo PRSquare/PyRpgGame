@@ -162,7 +162,7 @@ class InventoryInterface(ContainerInterface):
 			item = self._container.at(self._get_id_from_inputed_number(i))
 			ausmsg = interface.default_message_yes_or_no(f"Are you shure you want to drop {item.name}? This item will be lost forever!")
 			ausmsg.show()
-			ans = ausmsg.get_inputed_command()
+			ans = ausmsg.input_command()
 			if ans.equals(interface.InputVariant("n", "no")):
 				return
 			self.holder.drop(item)

@@ -104,8 +104,7 @@ class Location():
 		return self.cells[position]
 
 	def getLoot(self):
-		pass
-		
+		pass		
 				
 
 	def reset(self):

@@ -49,7 +49,7 @@ class Alive():
 	def __init__(self):
 		self.inventory = container.Container(self)
 
-# Properties
+#____________________ properties ____________________
 	@property
 	def name(self):
 		return self._name
@@ -108,8 +108,7 @@ class Alive():
 
 
 
-# Public methods
-
+#____________________ public methods ____________________
 	def kill(self):
 		if self._isDead:
 			return
@@ -249,6 +248,9 @@ class Alive():
 		except Exception:
 			raise
 
+	def add_item(self, item):
+		return self.inventory.add_item(item)
+
 	def drop(self, item):
 		self.unequip(item)
-		self.inventory.remove(item)
+		return self.inventory.remove(item)

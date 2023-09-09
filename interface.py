@@ -12,20 +12,11 @@ class InputVariant(Showable):
 	def equals(self, variant):
 		return self.command == variant.command
 
+	def equals_str(self, inp_str):
+		return self.command == inp_str
+
 	def show(self):
 		print(self.command, "-", self.description)
-
-class Message(Showable):
-	def __init__(self, text = "",  inputVars = []):
-		self.text = text
-		self.inputVars = inputVars
-	def show(self):
-		print(self.text)
-		for iv in self.inputVars:
-			iv.show()
-
-	def on_wrong_input(self):
-		pass
 
 
 
@@ -71,7 +62,7 @@ class Interface(Showable):
 	def input_command(self):
 		c = self.input()
 		for iv in self.inputVars.values():
-			if iv.command == c:
+			if iv.equals_str(c):
 				return iv
 		self.on_wrong_input()
 		return None
@@ -94,6 +85,29 @@ class Interface(Showable):
 			self._input_processor(inputed)
 		else:
 			self.on_wrong_input()
+
+
+class Message(Interface):
+	def __init__(self, text = "",  inputVars = []):
+		self.text = text
+		self.inputVars = inputVars
+
+	def show(self):
+		print(self.text)
+
+	def input_command(self):
+		for iv in self.inputVars:
+			iv.show()
+		s = input()
+		for iv in self.inputVars:
+			if iv.equals_str(s):
+				return iv
+
+	def on_wrong_input(self):
+		pass
+
+
+
 
 def default_message_yes_or_no(text):
 	return Message(

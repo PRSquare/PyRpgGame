@@ -103,7 +103,9 @@ class SellInterface(containerinterface.ContainerInterface):
 		
 		if inputed.equals(self.inputVars["sell"]):
 			i = self.input_number(0, containerinterface.ITEMS_PER_PAGE)
-			item = self.gameClassHandler.player.inventory.remove_by_id(self._get_id_from_inputed_number(i))
+			it_id = self._get_id_from_inputed_number(i)
+			item = self.gameClassHandler.player.inventory.at(it_id)
+			self.gameClassHandler.player.inventory.remove(item)
 			self.shop.buy(item)
 			self.gameClassHandler.player.money += item.price
 			
