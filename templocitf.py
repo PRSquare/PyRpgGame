@@ -174,10 +174,15 @@ class JourneyInterface(interface.Interface):
 		self.location = location
 
 		self.inputVars["quit"] = interface.InputVariant('q', "quit")
+		self.inputVars["status"] = interface.InputVariant('s', "status")
+		self.inputVars["inventory"] = interface.InputVariant('i', "inventory")
+		self.inputVars["countinue"] = interface.InputVariant('c', "countinue jorney")
+		self.inputVars["return"] = interface.InputVariant('r', "return to the village")
 
 
 	def show(self):
-		pass
+		print(f"\t{self.location.name}")
+		print(f"\t     [{self.location.currentPlayerPose}/{self.location.size}]")
 
 	def _input_processor(self, inputed):
 		
@@ -195,3 +200,10 @@ class JourneyInterface(interface.Interface):
 
 		if inputed.equals(self.inputVars["quit"]):
 			self._isOpen = False
+
+		if inputed.equals(self.inputVars["return"]):
+			self.gameClassHandler.go_to_tavern()
+
+		if inputed.equals(self.inputVars["countinue"]):
+			nextCell = self.location.get_cell()
+			# Combat

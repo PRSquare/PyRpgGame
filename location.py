@@ -81,7 +81,7 @@ class Location():
 		for i in range(0, size):
 			cells.append(LocCell())
 
-	def spawnMonsters(self, poition):
+	def spawn_monsters(self, poition):
 		sv = builder.get_random_element(self.spawnVars)
 		if sv:
 			for spawn in sv:
@@ -89,18 +89,18 @@ class Location():
 
 		self.cells[position].monsters.append(None) # monster
 
-	def placeItem(self, position, item):
+	def place_item(self, position, item):
 		self.cells[position].items.append(item)
 
-	def placeMonster(self, position, monster):
+	def place_monster(self, position, monster):
 		self.cells[position].monsters.append(monster) 
 
-	def getNextCell(self):
+	def get_next_cell(self):
 		if not self.isFinished:
 			self.currentPlayerPose += 1
-			self.getCell(self.currentPlayerPose)
+			self.get_cell(self.currentPlayerPose)
 
-	def getCell(self, position):
+	def get_cell(self, position):
 		return self.cells[position]
 
 	def getLoot(self):

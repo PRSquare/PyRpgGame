@@ -187,6 +187,9 @@ class fake_game():
 		atacked.health = atacked.health - dm.finaldamage
 		return atacked.isDead
 
+	# def combat(self, groupA, groupB):
+	# 	pass		
+
 	def exit(self):
 		self.doExit = True
 

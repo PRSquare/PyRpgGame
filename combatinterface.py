@@ -6,7 +6,7 @@ class CombatInterface(interface.Interface):
 		self._atacker = atacker
 		self._enemies = enemies # Alive objects list
 
-		self.inputVars["quit"] = interface.InputVariant("q", "quit")
+		# self.inputVars["quit"] = interface.InputVariant("q", "quit")
 		self.inputVars["atack"] = interface.InputVariant("a", "atack")
 		# self.inputVars["d"] = interface.InputVariant("")
 		self.inputVars["use"] = interface.InputVariant("u", "use item")
@@ -28,9 +28,9 @@ class CombatInterface(interface.Interface):
 
 	def _input_processor(self, inputed):
 		
-		if inputed.equals(self.inputVars["quit"]):
-			self._isOpen = False
-			return
+		# if inputed.equals(self.inputVars["quit"]):
+		# 	self._isOpen = False
+		# 	return
 
 		if inputed.equals(self.inputVars["atack"]):
 			print("chose the enemy")
