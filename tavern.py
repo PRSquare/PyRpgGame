@@ -1,4 +1,4 @@
-import player # quest
+import quest
 import globaldata
 import builder
 
@@ -10,8 +10,9 @@ class Tavern():
 		self.available_quests.clear()
 		for i in range(0, self.questsAmount):
 			self.available_quests.append(self._gen_quest(location, rewards[i]))
+			
 	def _gen_quest(self, location, reward):
-		q = player.Quest()
+		q = quest.Quest()
 		q.reward = reward
 		taget = builder.get_random_element(globaldata.ITEMS.data).build()
 		q.taget = taget

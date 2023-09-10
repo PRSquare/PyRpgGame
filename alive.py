@@ -180,20 +180,16 @@ class Alive():
 
 	def use(self, item):
 		if not item.isUsable:
-			return
+			return False
 
 		if item.isProtected:
-			return
+			return False
 
 		self.apply_item_effects(item)
 		item.onUse()
 
-		if item.isEquiped:
-			self.unequip(item)
-
-		if self.inventory.contains(item):
-			if item.isUsed:
-				self.inventory.remove(item)
+		self.remove_item(item)
+		return True
 
 	def add_effect(self, effect):
 		if not effect in self.effects:
@@ -251,6 +247,6 @@ class Alive():
 	def add_item(self, item):
 		return self.inventory.add_item(item)
 
-	def drop(self, item):
+	def remove_item(self, item):
 		self.unequip(item)
 		return self.inventory.remove(item)

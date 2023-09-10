@@ -1,4 +1,5 @@
 import interface
+import interface
 
 ITEMS_PER_PAGE = 10
 
@@ -165,5 +166,5 @@ class InventoryInterface(ContainerInterface):
 			ans = ausmsg.input_command()
 			if ans.equals(interface.InputVariant("n", "no")):
 				return
-			self.holder.drop(item)
+			self.holder.remove_item(item)
 			return

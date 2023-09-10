@@ -16,7 +16,7 @@ class Shop():
 			self.goods.add_item(itemB.build())
 
 	def sell_at(self, it_id):
-		item = self.goods.at(id)
+		item = self.goods.at(it_id)
 		self.goods.remove_by_id(it_id)
 		return item
 

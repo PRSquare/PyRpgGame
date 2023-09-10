@@ -82,7 +82,7 @@ class BuyInterface(containerinterface.ContainerInterface):
 			i = self.input_number(0, containerinterface.ITEMS_PER_PAGE)
 			item = self.shop.sell_at(self._get_id_from_inputed_number(i))
 			self.gameClassHandler.player.money -= item.price
-			self.gameClassHandler.player.inventory.add_item(item)
+			self.gameClassHandler.player.add_item(item)
 
 class SellInterface(containerinterface.ContainerInterface):
 	def __init__(self, gameClassHandler, shop):
@@ -105,7 +105,7 @@ class SellInterface(containerinterface.ContainerInterface):
 			i = self.input_number(0, containerinterface.ITEMS_PER_PAGE)
 			it_id = self._get_id_from_inputed_number(i)
 			item = self.gameClassHandler.player.inventory.at(it_id)
-			self.gameClassHandler.player.inventory.remove(item)
+			self.gameClassHandler.player.remove_item(item)
 			self.shop.buy(item)
 			self.gameClassHandler.player.money += item.price
 			

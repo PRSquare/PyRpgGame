@@ -11,6 +11,8 @@ import temp as t
 import shop
 import templocitf as tui
 import tavern
+import notifyerlistener
+import quest
 
 class CharacterCreationInterface(interface.Interface):
 	def __init__(self, gameClassHandler):
@@ -81,7 +83,7 @@ class CharacterCreationInterface(interface.Interface):
 		if inputed.equals(self.inputVars["start"]):
 			pl = PlayerClassNotif(self.gameClassHandler.targetKilledNotifyer, 
 				self.gameClassHandler.itemPickedUpNotifyer, 
-				self.gameClassHandler.itemDropedNotifyer
+				self.gameClassHandler.itemRemovedNotifyer
 			)
 			pl.name = self.name
 			for e in self.get_equipemet_by_class(self.plClass):
@@ -101,57 +103,24 @@ class Game():
 STATUS_EXIT = 0
 STATUS_CONTINUE = 1
 
-class Listener():
-	target = None
-	isActive = True
-	def target_fits(self, target):
-		return self.target == target
-	def on_notify(self):
-		pass
-
-class Notifyer():
-	listeners = []
-
-	def notify(self, target):
-		print(target)
-		# for l in self.listeners:
-		# 	if l.target_fits(target):
-		# 		l.on_notify()
-		# self._update_listeners()
-
-	def add_listener(self, listener):
-		if not listener in self.listeners:
-			self.listeners.append(listener)
-	def remove_listener(self, listener):
-		self.listener.remove(listener)
-
-	def clear_listeners(self):
-		self.listeners.clear()
-
-	def _update_listeners(self):
-		for l in self.listeners:
-			if not l.isActive:
-				self.remove_listener(l)
-
-
 class PlayerClassNotif(player.Player):
 	onKillNotifyer = None
 	onItemAddedNotifyer = None
-	onItemDroppedNotifyer = None
-	def __init__(self, onKillNotifyer, onItemAddedNotifyer, onItemDroppedNotifyer, name="Player"):
+	onItemRemovedNotifyer = None
+	def __init__(self, onKillNotifyer, onItemAddedNotifyer, onItemRemovedNotifyer, name="Player"):
 		super().__init__(name)
 		self.onKillNotifyer = onKillNotifyer
 		self.onItemAddedNotifyer = onItemAddedNotifyer
-		self.onItemDroppedNotifyer = onItemDroppedNotifyer
+		self.onItemRemovedNotifyer = onItemRemovedNotifyer
 
 	def add_item(self, item):
 		if super().add_item(item):
 			self.onItemAddedNotifyer.notify(item)
 			return True
 		return False
-	def drop(self, item):
-		if super().drop(item):
-			self.onItemDroppedNotifyer.notify(item)
+	def remove_item(self, item):
+		if super().remove_item(item):
+			self.onItemRemovedNotifyer.notify(item)
 			return True
 		return False
 
@@ -170,13 +139,13 @@ class fake_game():
 
 	targetKilledNotifyer = None
 	itemPickedUpNotifyer = None
-	itemDropedNotifyer = None
+	itemRemovedNotifyer = None
 
 	def __init__(self):
 
-		self.targetKilledNotifyer = Notifyer()
-		self.itemDropedNotifyer = Notifyer()
-		self.itemPickedUpNotifyer = Notifyer()
+		self.targetKilledNotifyer = notifyerlistener.Notifyer()
+		self.itemRemovedNotifyer = notifyerlistener.Notifyer()
+		self.itemPickedUpNotifyer = notifyerlistener.Notifyer()
 
 		loader.load_all_items(loader.get_data("data/tecnical/items.json"))
 		loader.load_all_monsters(loader.get_data("data/tecnical/monsters.json"))
